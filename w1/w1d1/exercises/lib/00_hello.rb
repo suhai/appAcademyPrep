@@ -3,10 +3,14 @@
 # they will also teach you the expected workflow, and how
 # to test your code with rspec.
 
+# def hello
+#   "oh hey there"
+# end
+
 def hello
-  "oh hey there"
+  "Hello!"
 end
 
 def greet(someone)
-  "Hello, #{soneone}!"
+  "Hello, #{someone}!"
 end
