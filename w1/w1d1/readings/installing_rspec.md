@@ -35,8 +35,8 @@ need a refresher on using the command line.
 [fundamentals]: ./../../../w0/readings/fundamentals.md
 
 ```sh
-~$ gem install bundler
-~$ bundle install
+~$ gem install bundler 
+~$ bundle install # This would create the Gemfile.lock file
 ```
 
 Here's what's happening:

@@ -2,9 +2,50 @@
 #
 # Write a method `factors(num)` that returns an array containing all the
 # factors of a given number.
-
 def factors(num)
+  (1..num).select { |i| num % i == 0}
 end
+
+
+# ### Substrings and Subwords
+# Write a method, `substrings`, that will take a `String` and return an
+# array containing each of its substrings. Don't repeat substrings.
+# Example output: `substrings("cat") => ["c", "ca", "cat", "a", "at",
+# "t"]`.
+#
+# Your `substrings` method returns many strings that are not true English
+# words. Let's write a new method, `subwords`, which will call
+# `substrings`, filtering it to return only valid words. To do this,
+# `subwords` will accept both a string and a dictionary (an array of
+# words).
+def substrings(str)
+  result = []
+  str_end = str.length - 1
+  (0..str_end).each do |i|
+    (i..str_end).each { |j| result << str[i..j] }
+  end 
+  result
+end
+#
+def subwords(word, dictionary)
+  result = []
+  word_arr = substrings(word)
+  word_arr.each do |str|
+    if (dictionary.include? str) && (!result.include? str)
+      result << str
+    end
+  end
+  result
+end
+
+# ### Doubler
+# Write a `doubler` method that takes an array of integers and returns an
+# array with the original elements multiplied by two.
+
+def doubler(arr)
+  arr.map {|num| num * 2}
+end
+
 
 # ### Bubble Sort
 #
@@ -44,40 +85,51 @@ end
 # greater, `1`. For future reference, you can define `<=>` on your own classes.
 #
 # http://stackoverflow.com/questions/827649/what-is-the-ruby-spaceship-operator
-
 class Array
-  def bubble_sort!
-  end
+  # def bubble_sort!
+  #   sorted = false
+  #   until sorted
+  #     sorted = true
+  #     (self.count - 1).times do |i|
+  #       if self[i] > self[i + 1]
+  #       self[i], self[i + 1] = self[i + 1], self[i]
+  #       sorted = false
+  #       end
+  #     end
+  #   end
+
+  #   self
+  # end
+  #
 
   def bubble_sort(&prc)
+    self.dup.bubble_sort!(&prc)
   end
+  #
+
+  def bubble_sort!(&prc)
+    prc ||= Proc.new { |x, y| x <=> y }
+
+    sorted = false
+    until sorted
+      sorted = true
+
+      i = 0
+      until i >= self.count - 1
+        j = i + 1
+        if prc.call(self[i], self[j]) == 1
+          sorted = false
+          self[i], self[j] = self[j], self[i]
+        end
+        i += 1
+      end
+    end
+
+    self
+  end
+
 end
 
-# ### Substrings and Subwords
-#
-# Write a method, `substrings`, that will take a `String` and return an
-# array containing each of its substrings. Don't repeat substrings.
-# Example output: `substrings("cat") => ["c", "ca", "cat", "a", "at",
-# "t"]`.
-#
-# Your `substrings` method returns many strings that are not true English
-# words. Let's write a new method, `subwords`, which will call
-# `substrings`, filtering it to return only valid words. To do this,
-# `subwords` will accept both a string and a dictionary (an array of
-# words).
-
-def substrings(string)
-end
-
-def subwords(word, dictionary)
-end
-
-# ### Doubler
-# Write a `doubler` method that takes an array of integers and returns an
-# array with the original elements multiplied by two.
-
-def doubler(array)
-end
 
 # ### My Each
 # Extend the Array class to include a method named `my_each` that takes a
@@ -104,6 +156,34 @@ end
 
 class Array
   def my_each(&prc)
+    i = 0
+    while i < self.count
+      yield(self[i])
+      i += 1
+    end
+
+    self
+  end
+  #
+
+  def my_map(&prc)
+    result = []
+    my_each { |el| result << yield(el) }
+    result
+  end
+  #
+
+  def my_select(&prc)
+    result = []
+    my_each { |el| result << el if yield(el) }
+    result
+  end
+  #
+
+  def my_inject(&prc)
+    result = self.first
+    self[1..-1].my_each { |el| result = yield(result, el) }
+    result
   end
 end
 
@@ -120,16 +200,7 @@ end
 #   (and not the symbol) version. Again, use your `my_each` to define
 #   `my_inject`. Again, do not modify the original array.
 
-class Array
-  def my_map(&prc)
-  end
 
-  def my_select(&prc)
-  end
-
-  def my_inject(&blk)
-  end
-end
 
 # ### Concatenate
 # Create a method that takes in an `Array` of `String`s and uses `inject`
@@ -140,5 +211,6 @@ end
 # # => "Yay for strings!"
 # ```
 
-def concatenate(strings)
+def concatenate(str_arr)
+  str_arr.inject("") { |result, str| result + str }
 end

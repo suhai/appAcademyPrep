@@ -17,9 +17,19 @@
 #   `"z"`! Ex.: `caesar("zany", 2) # => "bcpa"`
 
 class String
-  def caesar(shift)
+  def caesar(num)
+    str = self.downcase
+    alph = ('a'..'z').to_a
+    result = ""
+  
+    str.chars.each do |char|
+      result << alph[(alph.index(char) - (26 - num))] if alph.include?(char)  
+    end
+    result
   end
+
 end
+#
 
 # Hash: Difference
 #
@@ -35,9 +45,21 @@ end
 # ```
 
 class Hash
-  def difference(other_hash)
+  def difference(comparator)
+    result = {}
+    self.keys.each do |key|
+      result[key] = self[key] unless comparator.key?(key)
+    end
+
+    comparator.keys.each do |key|
+      result[key] = comparator[key] unless self.key?(key)
+    end
+
+    result
   end
 end
+
+
 
 # Stringify
 #
@@ -98,6 +120,11 @@ end
 
 class Fixnum
   def stringify(base)
+    hex_decimal = %w(0 1 2 3 4 5 6 7 8 9 a b c d e f)
+    return "0" if self == 0
+    mod = self % base
+    curr = self - mod
+    curr > 0 ? (curr/base).stringify(base) + hex_decimal[mod] : hex_decimal[mod]
   end
 end
 

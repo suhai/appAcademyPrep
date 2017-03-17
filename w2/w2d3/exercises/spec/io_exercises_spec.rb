@@ -25,7 +25,7 @@ describe 'guessing_game' do
 
     def guessing_game!
       guessing_game
-    rescue NoMoreInput
+      rescue NoMoreInput
     end
   end
 
@@ -38,13 +38,13 @@ describe 'guessing_game' do
 
   def answer
     guesses[guesses.index(gets.to_i) - 1]
-  rescue NoMoreInput
+    rescue NoMoreInput
     guesses.last
   end
 
   def num_guesses
     guesses.index(gets.to_i)
-  rescue NoMoreInput
+    rescue NoMoreInput
     100
   end
 
@@ -66,7 +66,7 @@ describe 'guessing_game' do
       begin
         $stdin.string = "100\n"
         guessing_game
-      rescue NoMoreInput
+        rescue NoMoreInput
         expect($stdout.string).to match(/too high/)
       end
     end
@@ -77,7 +77,7 @@ describe 'guessing_game' do
       begin
         $stdin.string = "0\n"
         guessing_game
-      rescue NoMoreInput
+        rescue NoMoreInput
         expect($stdout.string).to match (/too low/)
       end
     end

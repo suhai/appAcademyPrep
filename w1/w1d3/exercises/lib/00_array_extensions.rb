@@ -5,8 +5,12 @@
 
 class Array
   def sum
+    result = 0
+    self.each { |el| result += el }
+    result
   end
 end
+#
 
 # Square
 #
@@ -16,14 +20,16 @@ end
 
 class Array
   def square!
+    self.map! { |el| el * el }
   end
 
   def square
+    self.map { |el| el * el }
   end
 end
+#
 
 # Finding Uniques
-#
 # Monkey-patch the Array class with your own `uniq` method, called
 # `my_uniq`. The method should return the unique elements, in the order
 # they first appeared:
@@ -36,8 +42,12 @@ end
 
 class Array
   def my_uniq
+    result = []
+    self.each { |el| result << el unless result.include?(el) }
+    result
   end
 end
+#
 
 # Two Sum
 #
@@ -57,8 +67,16 @@ end
 
 class Array
   def two_sum
+    result = []
+    self.each_with_index do |x, i|
+      self.each_with_index do |y, j|
+        result << [i, j] if x + y == 0 && j > i
+      end
+    end
+    result    
   end
 end
+
 
 # Median
 #
@@ -69,8 +87,16 @@ end
 
 class Array
   def median
+    return nil if self.empty?
+    sorted = self.sort
+    if self.length.odd?
+      sorted[self.length / 2]
+    else
+      (sorted[(self.length / 2) - 1] + sorted[self.length / 2]).to_f/2
+    end
   end
 end
+#
 
 # My Transpose
 #
@@ -121,6 +147,7 @@ end
 
 class Array
   def my_transpose
+    self[0].zip(*self[1..-1])
   end
 end
 

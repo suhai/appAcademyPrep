@@ -29,6 +29,55 @@
 # all the items of `set1` that aren't in `set2`.
 
 class MyHashSet
+  attr_reader :store
+  def initialize
+    @store = {}
+  end
+
+  def insert(el)
+    store[el] = true
+  end
+
+  def include?(el)
+    store.has_key?(el)
+  end
+
+  def delete(el)
+    return false unless self.include?(el)
+    store.delete(el)
+    true
+  end
+
+  def to_a
+    store.keys
+  end
+
+  def union(set2)
+    unionized = self.class.new
+    (self.to_a + set2.to_a).each { |el| unionized.insert(el) }
+    unionized
+  end
+
+  def intersect(set2)
+    over_lap = self.class.new
+    self.to_a.each { |el| set2.include?(el) ? over_lap.insert(el) : nil}
+    over_lap
+  end
+
+  def minus(set2)
+    set_diff = self.class.new
+    self.to_a.each { |el| set2.include?(el) ? nil : set_diff.insert(el)}
+    set_diff
+  end
+
+# Bonus
+  def symmetric_difference(set2)
+    self.union(set2) - self.intersect(set2)
+  end
+
+  def ==(object)
+    return true if object.is_a?(MyHashSet) && object == set1
+  end
 end
 
 # Bonus
