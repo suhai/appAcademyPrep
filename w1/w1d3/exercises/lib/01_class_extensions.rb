@@ -28,7 +28,22 @@ class String
     result
   end
 
+  # def caesar(str, num)
+  # # str = strr.downcase
+  #   alph1 = ('a'..'z').to_a
+  #   alph2 = ('A'..'Z').to_a
+  #   result = ""
+
+  #   str.chars.each do |char|
+  #     result << alph1[(alph1.index(char) - (26 - num))] if alph1.include?(char) 
+  #     result << alph2[(alph2.index(char) - (26 - num))] if alph2.include?(char) 
+  #   end
+  #   result
+  # end
+
 end
+
+
 #
 
 # Hash: Difference

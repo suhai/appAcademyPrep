@@ -1,10 +1,10 @@
 def echo(str)
-  return str
+  str
 end
 #
 
 def shout(str)
-  return str.upcase
+  str.upcase
 end
 #
 

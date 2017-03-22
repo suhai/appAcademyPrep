@@ -5,7 +5,7 @@ def reverser(&prc)
   # result = yield
   # result.split(" ").map { |x| x.reverse }.join(" ")
   # or 
-  prc.call.split(" ").map { |x| x.reverse }.join(" ")
+  prc.call.split(" ").map { |word| word.reverse }.join(" ")
 end
 #
 
