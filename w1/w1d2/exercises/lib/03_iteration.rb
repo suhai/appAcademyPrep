@@ -43,7 +43,7 @@ end
 # array with the original elements multiplied by two.
 
 def doubler(arr)
-  arr.map {|num| num * 2}
+  arr.map { |num| num * 2 }
 end
 
 
